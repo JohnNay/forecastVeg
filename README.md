@@ -2,13 +2,17 @@
 Forecasting Vegetation Health at High Spatial Resolution
 ========================================================
 
-This is supplementary material for a project by John J. Nay, Emily Burchfield, and Jonathan Gilligan. We created a decision-support software system that forecasts agricultural productivity at high spatial resolutions, based on the application of machine learning to [NASA satellite imagery](http://modis.gsfc.nasa.gov/data/dataprod/index.php). The tool is global in coverage. This document describes how to run our software by listing the external software requirements and the exact commands to be run in a terminal for completing our process.
+Drought threatens food and water security around the world, and this threat is likely to become more severe under climate change. High resolution predictive information can help farmers, water managers, and others to manage the effects of drought. We have created a tool to produce short-term forecasts of vegetation health at high spatial resolution, using open source software and [NASA satellite data](http://modis.gsfc.nasa.gov/data/dataprod/index.php) that are global in coverage. The tool automates downloading and processing Moderate Resolution Imaging Spectroradiometer (MODIS) datasets, and training gradient-boosted machine models on hundreds of millions of observations to predict future values of the Enhanced Vegetation Index. We compared the predictive power of different sets of variables (raw spectral MODIS data and Level-3 MODIS products) in two regions with distinct agro-ecological systems, climates, and cloud coverage: Sri Lanka and California. Our tool provides considerably greater predictive power on held-out datasets than simpler baseline models.
+
+This website hosts the supplementary material for this project by John J. Nay, Emily Burchfield, and Jonathan Gilligan, listing the external software requirements and the exact commands to be run in a terminal for completing our process.
 
 The data downloading and processing requires a computer with significant amounts of RAM (\> 100 GB) because the data must be held in memory to manipulate it. The modeling and hyper-parameters search can be run on weaker machines but the training time will take months if run on a laptop. To complete model training and hyper-parameters search in a few days, train the models on a computer with \>= available 32 threads and \>= 100 GB RAM.
 
 If you use these scripts, cite this paper:
 
 Nay, John J., Burchfield, Emily, Gilligan, Jonathan. (2016) Forecasting Vegetation Health at High Spatial Resolution.
+
+United States National Science Foundation grant EAR-1204685 funded this research.
 
 Requirements
 ============
