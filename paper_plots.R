@@ -380,45 +380,6 @@ if(all_non_scatters){
   print(p)
   dev.off() 
   
-  # Variable Importance
-  range01 <- function(x) (x-min(x))/(max(x)-min(x))
-  
-  gbmvarimp1 <- read.csv("output/gbm_varimp.csv", 
-                         stringsAsFactors = FALSE) %>%
-    filter(variable != "EVI_lag") %>%
-    mutate(Scaled_Rel_Importance = range01(relative_importance),
-           Location = "SL") %>%
-    filter(scaled_importance >= scaled_importance[which(order(scaled_importance)==7)])
-  
-  gbmvarimp2 <- read.csv("output/gbm_varimpCA.csv", 
-                         stringsAsFactors = FALSE) %>% 
-    filter(variable != "EVI_lag") %>%
-    mutate(Scaled_Rel_Importance = range01(relative_importance),
-           Location = "CA") %>%
-    filter(scaled_importance >= scaled_importance[which(order(scaled_importance)==7)])
-  
-  out <- rbind(gbmvarimp1, gbmvarimp2)
-  out$variable[out$variable=="nino34_lag"] <- "nino_lag"
-  
-  pdf(paste0("output/paper_plots/var_imp.pdf"), width=10, height=6)
-  print(out %>%
-          mutate(Location = factor(Location, levels = c("SL", "CA"))) %>%
-          ggplot(aes(y= scaled_importance, x = reorder(variable, -scaled_importance))) +
-          geom_bar(stat = "identity") + 
-          facet_wrap(~Location) +
-          xlab("Predictor Variable in Model") + ylab("Scaled Importance for Predictive Power") + 
-          ggtitle("Scaled Importance of Predictor Variables for GBM Model") + 
-          theme_classic())
-  # print(rbind(gbmvarimp1, gbmvarimp2) %>%
-  #   mutate(Location = factor(Location, levels = c("SL", "CA"))) %>%
-  #   ggplot(aes(y= Scaled_Rel_Importance, x = reorder(variable, -Scaled_Rel_Importance))) +
-  #   geom_bar(stat = "identity") + 
-  #   facet_wrap(~Location) +
-  #   xlab("Predictor Variable in Model") + ylab("Scaled Importance for Predictive Power") + 
-  #   ggtitle("Scaled Importance of Predictor Variables for GBM Model") + 
-  #   theme_classic())
-  dev.off()
-  
   # Missing data over time
   cam <- read.csv("output/missing_data/ca_mean.csv", header = FALSE)[,1]
   cas <- read.csv("output/missing_data/ca_std.csv", header = FALSE)[,1]
