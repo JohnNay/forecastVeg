@@ -36,6 +36,10 @@ United States National Science Foundation grant EAR-1204685 funded this research
 
 The optional visualizations of validation performance requires R, and the R packages dplyr, ggplot2, and ggExtra.
 
+# Overview:
+
+![Methods Diagram](figures/methods_diagram.jpg)
+
 # Data construction:
 
 python -u 0_matrix_construction.py spectral directory username password tiles today enddate referenceImage > 0_construct.log &

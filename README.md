@@ -31,6 +31,11 @@ Requirements
 
 The optional visualizations of validation performance requires R, and the R packages dplyr, ggplot2, and ggExtra.
 
+Overview:
+=========
+
+![Methods Diagram](figures/methods_diagram.jpg)
+
 Data construction:
 ==================
 
