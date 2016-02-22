@@ -165,18 +165,22 @@ final_predict(gbm.ix[gbm['mse'].idxmin(), ['ntrees', 'max_depth', 'learn_rate']]
               csvfile = saving_fp, saving_varimp_fp = saving_varimp_fp,
               csvfile_vector = saving_predictions_fp)
 
-import smtplib
-GMAIL_USERNAME = "gilligan.research"
-session = smtplib.SMTP('smtp.gmail.com', 587)
-session.ehlo()
-session.starttls()
-session.login(GMAIL_USERNAME, "Bangarang")
-recip = "john.j.nay@vanderbilt.edu"
-headers = "\r\n".join(["from: " + GMAIL_USERNAME,
-                       "subject: " + "Finished running script: " + __file__,
-                       "to: " + recip,
-                       "mime-version: 1.0",
-                       "content-type: text/html"])
-
-content = headers + "\r\n\r\n" + "Done running the script.\n Sent from my Python code."
-session.sendmail(GMAIL_USERNAME, recip, content)
+# Send email
+email = False
+if(email):
+  import smtplib
+  GMAIL_USERNAME = None
+  GMAIL_PW = None
+  RECIP = None
+  SMTP_NUM = None
+  session = smtplib.SMTP('smtp.gmail.com', SMTP_NUM)
+  session.ehlo()
+  session.starttls()
+  session.login(GMAIL_USERNAME, GMAIL_PW)
+  headers = "\r\n".join(["from: " + GMAIL_USERNAME,
+                         "subject: " + "Finished running script: " + __file__,
+                         "to: " + RECIP,
+                         "mime-version: 1.0",
+                         "content-type: text/html"])
+  content = headers + "\r\n\r\n" + "Done running the script.\n Sent from my Python code."
+  session.sendmail(GMAIL_USERNAME, RECIP, content)

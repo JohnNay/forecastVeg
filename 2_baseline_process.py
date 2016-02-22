@@ -29,3 +29,23 @@ data = data[data['EVI'].notnull()]
 print "Data shape:", data.shape
 
 data.to_csv(save_data_fp, header=True, index=False)
+
+# Send email
+email = False
+if(email):
+  import smtplib
+  GMAIL_USERNAME = None
+  GMAIL_PW = None
+  RECIP = None
+  SMTP_NUM = None
+  session = smtplib.SMTP('smtp.gmail.com', SMTP_NUM)
+  session.ehlo()
+  session.starttls()
+  session.login(GMAIL_USERNAME, GMAIL_PW)
+  headers = "\r\n".join(["from: " + GMAIL_USERNAME,
+                         "subject: " + "Finished running script: " + __file__,
+                         "to: " + RECIP,
+                         "mime-version: 1.0",
+                         "content-type: text/html"])
+  content = headers + "\r\n\r\n" + "Done running the script.\n Sent from my Python code."
+  session.sendmail(GMAIL_USERNAME, RECIP, content)
