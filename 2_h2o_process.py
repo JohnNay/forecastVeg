@@ -10,16 +10,16 @@ save_data_fp = my_args[1]
 #######################################################################
 print "Initializing h2o..."
 import h2o
-h2o.init(min_mem_size_GB=200, max_mem_size_GB = 210)
+h2o.init(min_mem_size = 200, max_mem_size = 210)
 
 #######################################################################
 print "Importing data..."
-data = h2o.import_frame(path = load_data_fp)
+data = h2o.import_file(path = load_data_fp)
 
 #######################################################################
 ## summarize data
 data.describe()
-data.dim()
+data.dim
 data.head()
 
 #######################################################################

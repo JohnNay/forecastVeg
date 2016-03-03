@@ -20,8 +20,8 @@ print "Pre-processing the data..."
 testing = False
 prop_train = 0.80 # This is from 1_pre_process.py
 
-h2o.init(min_mem_size_GB=200, max_mem_size_GB = 210)
-data = h2o.import_frame(path = h2o.locate(load_data_fp))
+h2o.init(min_mem_size=200, max_mem_size = 210)
+data = h2o.import_file(path = load_data_fp)
 
 data.describe()
 
@@ -40,9 +40,9 @@ print "Dropping rows where the PixelReliability is NA..."
 ind = data['PixelReliability'] == 9999
 ind = ind!=1.0
 ind.show()
-print data.dim()
+print data.dim
 data = data[ind] 
-print data.dim()
+print data.dim
 
 print "Setting all the -9999.0 in the CA landuse to NA..."
 landuse = data['landuse']
@@ -63,20 +63,20 @@ print "Dropping rows where the outcome, EVI, is NA..."
 ind = data['EVI'].isna()
 ind = ind!=1.0
 ind.show()
-print data.dim() 
+print data.dim 
 data = data[ind] 
-print data.dim()
+print data.dim
 
 print "Dividing into training and holdout with 'autocorrelationGrid' column..."
-print data.dim()
+print data.dim
 train_index = data['training']
 d = data[train_index]
-print d.dim()
-print "Proportion of data in training data", d.dim()[0]/data.dim()[0]
-assert round(d.dim()[0]/data.dim()[0], 2) == prop_train or round(d.dim()[0]/data.dim()[0], 2) == prop_train + .01 or round(d.dim()[0]/data.dim()[0], 2) == prop_train - .01
+print d.dim
+print "Proportion of data in training data", d.dim[0]/data.dim[0]
+assert round(d.dim[0]/data.dim[0], 2) == prop_train or round(d.dim[0]/data.dim[0], 2) == prop_train + .01 or round(d.dim[0]/data.dim[0], 2) == prop_train - .01
 hold_index = train_index != 'True'
 holdout = data[hold_index]
-assert holdout.dim()[0] + d.dim()[0] == data.dim()[0]
+assert holdout.dim[0] + d.dim[0] == data.dim[0]
 
 h2o.remove([data, hold_index, train_index])
 del data, hold_index, train_index
@@ -95,15 +95,15 @@ if (len(my_args)>3):
   grid_options = grid_options[1:]
   
   # convert autocor to a python list from h2o, lists are too large so have to do this in two pieces
-  autocor1 = h2o.as_list(autocor[0:autocor.dim()[0]/2,:,], use_pandas=False)
-  autocor2 = h2o.as_list(autocor[len(autocor1):autocor.dim()[0]+1,:,], use_pandas=False)
+  autocor1 = h2o.as_list(autocor[0:autocor.dim[0]/2,:,], use_pandas=False)
+  autocor2 = h2o.as_list(autocor[len(autocor1):autocor.dim[0]+1,:,], use_pandas=False)
   autocor_l = autocor1 + autocor2
   autocor = np.squeeze(autocor_l)
   # drop col name:
   autocor = autocor[1:]
   print "autocor head:", autocor[:25]
   print "autocor length:", len(autocor)
-  print "data rows:", d.dim()[0]
+  print "data rows:", d.dim[0]
   
   training_grids = np.random.choice(a = grid_options, size = len(grid_options)*prop_train, replace=False)
   testing_grids = np.array(grid_options[np.array([x not in training_grids for x in grid_options])])
@@ -127,8 +127,8 @@ if (len(my_args)>3):
 
   # assert round(sum(training)/len(training), 2) == prop_train or round(sum(training)/len(training), 2) == prop_train + 1 or round(sum(training)/len(training), 2) == prop_train - 1
   print "len(training):", len(training) 
-  print "d.dim()[0]:", d.dim()[0]
-  #assert len(training) == d.dim()[0]
+  print "d.dim[0]:", d.dim[0]
+  #assert len(training) == d.dim[0]
   # Save to csv to then load into h2o later:
   print "Starting to save to csv format..."
   training = pd.DataFrame(training)

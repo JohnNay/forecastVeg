@@ -19,10 +19,10 @@ evals = 35
 print "Loading in data..."
 print "Not imputing missing predictor data because GBM can handle missing values."
 
-h2o.init(min_mem_size_GB=230, max_mem_size_GB = 240)
-d = h2o.import_frame(path = load_data_fp)
-train_index = h2o.import_frame(path = load_train_ind_fp)
-assert train_index.dim()[0] == d.dim()[0]
+h2o.init(min_mem_size=230, max_mem_size = 240)
+d = h2o.import_file(path = load_data_fp)
+train_index = h2o.import_file(path = load_train_ind_fp)
+assert train_index.dim[0] == d.dim[0]
 
 #######################################################################
 ## summarize data
@@ -46,7 +46,7 @@ test_index = d['train_index'] != 1
 test = d[test_index]
 
 print "Training data has",train.ncol(),"columns and",train.nrow(),"rows, test has",test.nrow(),"rows."
-assert test.dim()[0] + train.dim()[0] == d.dim()[0]
+assert test.dim[0] + train.dim[0] == d.dim[0]
 
 print "Making data 25% smaller so this doesnt take as long by randomly keeping 75% of the rows."
 r = train[0].runif() # Random UNIform numbers (0,1), one per row
