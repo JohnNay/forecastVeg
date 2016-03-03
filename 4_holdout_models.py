@@ -18,10 +18,10 @@ predictors = my_args[6:]
 # predictors = GWP_lag LST_lag NDVI_lag FPAR_lag LAI_lag GP_lag PSN_lag nino34_lag time_period EVI_lag
 
 print "Loading in data..."
-h2o.init(min_mem_size_GB=200, max_mem_size_GB = 210)
+h2o.init(min_mem_size=200, max_mem_size = 210)
 
-# holdout = h2o.import_frame(path = "/data/john/srilanka/h2o_data_holdout")
-# di = h2o.import_frame(path = "/data/john/srilanka/model_imputed_data")
+# holdout = h2o.import_file(path = "/data/john/srilanka/h2o_data_holdout")
+# di = h2o.import_file(path = "/data/john/srilanka/model_imputed_data")
 # 
 # def fit_predict_dl(params, predictors, csvfile):
 #   h1, h2, h3, hdr1, hdr2, hdr3, l2, l1, rho, epsilon = params
@@ -46,7 +46,7 @@ h2o.init(min_mem_size_GB=200, max_mem_size_GB = 210)
 #     writer.writerow(tosave)
 #   return(h2o.as_list(dl.predict(holdout[predictors])))
 
-holdout = h2o.import_frame(path = load_data_fp)
+holdout = h2o.import_file(path = load_data_fp)
 print "Making 'time_period' and 'landuse' a factor..."
 holdout['time_period'] = holdout['time_period'].asfactor()
 assert holdout['time_period'].isfactor()
@@ -56,7 +56,7 @@ assert holdout['landuse'].isfactor()
 print holdout.levels(col='landuse')
 holdout.describe()
 
-d = h2o.import_frame(path = train_data_fp)
+d = h2o.import_file(path = train_data_fp)
 print "Making 'time_period' and 'landuse' a factor..."
 d['time_period'] = d['time_period'].asfactor()
 assert d['time_period'].isfactor()
@@ -94,38 +94,38 @@ def fit_predict_gbm(params, predictors, csvfile, saving_varimp_fp):
   
   # lists are too large so have to do this in two pieces
   yh2o = model.predict(holdout[predictors])
-  y1 = h2o.as_list(yh2o[0:yh2o.dim()[0]/2,:,], use_pandas=False)
-  y2 = h2o.as_list(yh2o[len(y1):yh2o.dim()[0]+1,:,], use_pandas=False)
+  y1 = h2o.as_list(yh2o[0:yh2o.dim[0]/2,:,], use_pandas=False)
+  y2 = h2o.as_list(yh2o[len(y1):yh2o.dim[0]+1,:,], use_pandas=False)
   y_l = y1 + y2
   y = np.squeeze(y_l)
   
   evi = holdout["EVI"]
-  yreal1 = h2o.as_list(evi[0:evi.dim()[0]/2,:,], use_pandas=False)
-  yreal2 = h2o.as_list(evi[len(yreal1):evi.dim()[0]+1,:,], use_pandas=False)
+  yreal1 = h2o.as_list(evi[0:evi.dim[0]/2,:,], use_pandas=False)
+  yreal2 = h2o.as_list(evi[len(yreal1):evi.dim[0]+1,:,], use_pandas=False)
   yreal_l = yreal1 + yreal2
   yreal = np.squeeze(yreal_l)
   
   lu = holdout["landuse"]
-  lu1 = h2o.as_list(lu[0:lu.dim()[0]/2,:,], use_pandas=False)
-  lu2 = h2o.as_list(lu[len(lu1):lu.dim()[0]+1,:,], use_pandas=False)
+  lu1 = h2o.as_list(lu[0:lu.dim[0]/2,:,], use_pandas=False)
+  lu2 = h2o.as_list(lu[len(lu1):lu.dim[0]+1,:,], use_pandas=False)
   lu_l = lu1 + lu2
   landuse = np.squeeze(lu_l)
   
   tp = holdout["time_period"]
-  tp1 = h2o.as_list(tp[0:tp.dim()[0]/2,:,], use_pandas=False)
-  tp2 = h2o.as_list(tp[len(tp1):tp.dim()[0]+1,:,], use_pandas=False)
+  tp1 = h2o.as_list(tp[0:tp.dim[0]/2,:,], use_pandas=False)
+  tp2 = h2o.as_list(tp[len(tp1):tp.dim[0]+1,:,], use_pandas=False)
   tp_l = tp1 + tp2
   time_period = np.squeeze(tp_l)
   
   lat = holdout["latitude"]
-  lat1 = h2o.as_list(lat[0:lat.dim()[0]/2,:,], use_pandas=False)
-  lat2 = h2o.as_list(lat[len(lat1):lat.dim()[0]+1,:,], use_pandas=False)
+  lat1 = h2o.as_list(lat[0:lat.dim[0]/2,:,], use_pandas=False)
+  lat2 = h2o.as_list(lat[len(lat1):lat.dim[0]+1,:,], use_pandas=False)
   lat_l = lat1 + lat2
   latitude = np.squeeze(lat_l)
   
   longi = holdout["longitude"]
-  longi1 = h2o.as_list(longi[0:longi.dim()[0]/2,:,], use_pandas=False)
-  longi2 = h2o.as_list(longi[len(longi1):longi.dim()[0]+1,:,], use_pandas=False)
+  longi1 = h2o.as_list(longi[0:longi.dim[0]/2,:,], use_pandas=False)
+  longi2 = h2o.as_list(longi[len(longi1):longi.dim[0]+1,:,], use_pandas=False)
   longi_l = longi1 + longi2
   longitude = np.squeeze(longi_l)
   
