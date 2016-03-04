@@ -8,6 +8,8 @@ my_args = sys.argv[1:]
 print "Arguments passed to script:", my_args
 load_data_fp = my_args[0]
 save_data_fp = my_args[1]
+intervals = int(my_args[2]) # 253 for SL and 230 for BL
+years = intervals/23
 
 print "Data loading..."
 dat = np.load(load_data_fp + 'finalMatrix.npy')
@@ -44,7 +46,7 @@ loc = meta.index(s)+len(s + ':  ')
 first_blank_space = meta[loc:len(meta)].index(' ')
 ncol = int(meta[loc:loc+first_blank_space])
 
-uniq_id = np.tile(range(1, nrow*ncol+1), 253)
+uniq_id = np.tile(range(1, nrow*ncol+1), intervals)
 len(np.unique(uniq_id))
 assert dat.shape[0] == len(uniq_id)
 dat = np.c_[dat, uniq_id]
@@ -66,7 +68,7 @@ print "Adding time_period variable after we have re-ordered into time sequencing
 # in R:
 # time_period <- rep(as.factor(rep(1:23, 11)), nrow(d)/length(as.factor(rep(1:23, 11))))
 # stopifnot(length(time_period) == nrow(d))
-time_for_one_pixel = np.tile(range(1,24), 11)
+time_for_one_pixel = np.tile(range(1,24), years)
 time_period = np.tile(time_for_one_pixel, dat.shape[0]/len(time_for_one_pixel))
 assert len(time_period) == dat.shape[0]
 dat = np.c_[dat, time_period]

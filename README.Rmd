@@ -58,18 +58,20 @@ python -u 0_matrix_construction.py spectral directory username password tiles to
 
 ### For non-spectral:
  
-python -u 1_pre_process.py *load_data_fp save_data_fp load_extra_file* > 1_process.log &
+python -u 1_pre_process.py *load_data_fp save_data_fp load_extra_file intervals* > 1_process.log &
 
   * load_extra_file is optional, its used when an analyst has ancillary data, e.g. land-use classifications
-  * python -u 1_pre_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy > 1_process.log &
-  * python -u 1_pre_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy > 1_processCA.log &
+  * python -u 1_pre_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy 253 > 1_process.log &
+  * python -u 1_pre_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy 253 > 1_processCA.log &
 
 ### For spectral:
 
-python -u 1_pre_processS.py *load_data_fp save_data_fp old_data_fp load_extra_file* > 1_processS.log &
+python -u 1_pre_processS.py *load_data_fp save_data_fp old_data_fp intervals load_extra_file* > 1_processS.log &
 
-  * python -u 1_pre_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy > 1_processS.log &
-    * python -u 1_pre_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy > 1_processSCA.log &
+  * python -u 1_pre_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv 253 /data/NDVI/columns/landuse.npy > 1_processS.log &
+    * python -u 1_pre_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv 253 /data/emily/SJ/SJlanduse.npy > 1_processSCA.log &
+    
+  * python -u 1_pre_processS.py /data/emily/BL/spectral/ /data/john/BL/data1S.csv None 230 /data/emily/SJ/SJlanduse.npy > 1_processSBL.log &
 
 ## For h2o:
 

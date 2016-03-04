@@ -8,7 +8,9 @@ my_args = sys.argv[1:]
 print "Arguments passed to script:", my_args
 load_data_fp = my_args[0]
 save_data_fp = my_args[1]
-old_data_fp = my_args[2]
+old_data_fp = my_args[2] # "None"
+intervals = int(my_args[3]) # 253 for SL and 230 for BL
+years = intervals/23
 
 print "Data loading..."
 dat = np.load(load_data_fp + 'finalMatrix.npy')
@@ -20,9 +22,9 @@ coln = coln.split()
 # Variables to + '_lag'
 lags = ["GWP","B1","B2","B3","B4","B5","B6","B7", "nino34"]
 
-if (len(my_args)>3):
+if (len(my_args)>4):
   print "Data loading for extra file..."
-  load_extra_file = my_args[3]
+  load_extra_file = my_args[4]
   landuse = np.load(load_extra_file)
   assert dat.shape[0] == len(landuse)
   dat = np.c_[dat, landuse]
@@ -42,7 +44,7 @@ s = 'self.columns'
 loc = meta.index(s)+len(s + ':  ')
 first_blank_space = meta[loc:len(meta)].index(' ')
 ncol = int(meta[loc:loc+first_blank_space])
-uniq_id = np.tile(range(1, nrow*ncol+1), 253)
+uniq_id = np.tile(range(1, nrow*ncol+1), intervals)
 len(np.unique(uniq_id))
 assert dat.shape[0] == len(uniq_id)
 dat = np.c_[dat, uniq_id]
@@ -64,7 +66,7 @@ print "Adding time_period variable after we have re-ordered into time sequencing
 # in R:
 # time_period <- rep(as.factor(rep(1:23, 11)), nrow(d)/length(as.factor(rep(1:23, 11))))
 # stopifnot(length(time_period) == nrow(d))
-time_for_one_pixel = np.tile(range(1,24), 11)
+time_for_one_pixel = np.tile(range(1,24), years)
 time_period = np.tile(time_for_one_pixel, dat.shape[0]/len(time_for_one_pixel))
 assert len(time_period) == dat.shape[0]
 dat = np.c_[dat, time_period]
@@ -113,21 +115,35 @@ df.columns = new
 df.drop('NDVI', axis=1, inplace=True)
 
 print "Spliting into training and validation sets..."
-## WE RAN THE CODE BELOW FOR INDEX DATA AND NOW LETS JUST LOAD THAT BACK IN AND USE THE SAME TRAINING COLUMN FROM THAT
-# prop_train = 0.85
-# grid_options = np.unique(df['autocorrelationGrid'])
-# training_grids = np.random.choice(a = grid_options, size = round(len(grid_options)*prop_train), replace=False)
-# testing_grids = grid_options[np.array([x not in training_grids for x in grid_options])]
-# assert sum([len(training_grids), len(testing_grids)]) == len(grid_options)
-# assert all([x not in training_grids for x in testing_grids])
-# assert all([x not in testing_grids for x in training_grids])
-# # create vector allocating every obs to training or testing:
-# training = np.array([x in training_grids for x in df['autocorrelationGrid']])
-# assert round(sum(training)/len(training), 2) == prop_train or round(sum(training)/len(training), 2) == prop_train + 1 or round(sum(training)/len(training), 2) == prop_train - 1
-# assert len(training) == df.shape[0]
-# df['training'] = training
-data = pd.read_csv(old_data_fp)
-df['training'] = data['training']
+if(old_data_fp != "None"):
+  data = pd.read_csv(old_data_fp)
+  df['training'] = data['training']
+else:
+  prop_train = 0.80
+  grid_options = np.unique(df['autocorrelationGrid'])
+  
+  training_grids = np.random.choice(a = grid_options, size = round(len(grid_options)*prop_train), replace=False)
+  testing_grids = grid_options[np.array([x not in training_grids for x in grid_options])]
+  assert sum([len(training_grids), len(testing_grids)]) == len(grid_options)
+  assert all([x not in training_grids for x in testing_grids])
+  assert all([x not in testing_grids for x in training_grids])
+  # create vector allocating every obs to training or testing:
+  training = np.array([x in training_grids for x in df['autocorrelationGrid']])
+  
+  while(not (round(sum(training)/len(training), 2) == prop_train or round(sum(training)/len(training), 2) == prop_train + 0.01 or round(sum(training)/len(training), 2) == prop_train - 0.01)):
+    print "Proportion assigned to training data:", sum(training)/len(training)
+    print "Trying to assign data to training in a way that gives us the correct proportion..."
+    training_grids = np.random.choice(a = grid_options, size = round(len(grid_options)*prop_train), replace=False)
+    testing_grids = grid_options[np.array([x not in training_grids for x in grid_options])]
+    assert sum([len(training_grids), len(testing_grids)]) == len(grid_options)
+    assert all([x not in training_grids for x in testing_grids])
+    assert all([x not in testing_grids for x in training_grids])
+    # create vector allocating every obs to training or testing:
+    training = np.array([x in training_grids for x in df['autocorrelationGrid']])
+  
+  print "Proportion assigned to training data:", sum(training)/len(training)
+  assert len(training) == df.shape[0]
+  df['training'] = training 
 
 # Save to csv to then load into h2o:
 print "Starting to save to csv format..."
