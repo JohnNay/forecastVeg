@@ -56,18 +56,19 @@ Pre-processing (spectral and non-spectral use different scripts):
 
 ### For non-spectral:
 
-python -u 1\_pre\_process.py *load\_data\_fp save\_data\_fp load\_extra\_file* \> 1\_process.log &
+python -u 1\_pre\_process.py *load\_data\_fp save\_data\_fp load\_extra\_file intervals* \> 1\_process.log &
 
 -   load\_extra\_file is optional, its used when an analyst has ancillary data, e.g. land-use classifications
--   python -u 1\_pre\_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy \> 1\_process.log &
--   python -u 1\_pre\_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy \> 1\_processCA.log &
+-   python -u 1\_pre\_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy 253 \> 1\_process.log &
+-   python -u 1\_pre\_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy 253 \> 1\_processCA.log &
 
 ### For spectral:
 
-python -u 1\_pre\_processS.py *load\_data\_fp save\_data\_fp old\_data\_fp load\_extra\_file* \> 1\_processS.log &
+python -u 1\_pre\_processS.py *load\_data\_fp save\_data\_fp old\_data\_fp intervals load\_extra\_file* \> 1\_processS.log &
 
--   python -u 1\_pre\_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy \> 1\_processS.log &
-    -   python -u 1\_pre\_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy \> 1\_processSCA.log &
+-   python -u 1\_pre\_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv 253 /data/NDVI/columns/landuse.npy \> 1\_processS.log &
+    -   python -u 1\_pre\_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv 253 /data/emily/SJ/SJlanduse.npy \> 1\_processSCA.log &
+-   python -u 1\_pre\_processS.py /data/emily/BL/spectral/ /data/john/BL/data1S.csv None 230 /data/emily/SJ/SJlanduse.npy \> 1\_processSBL.log &
 
 For h2o:
 --------
