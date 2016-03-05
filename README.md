@@ -68,7 +68,7 @@ python -u 1\_pre\_processS.py *load\_data\_fp save\_data\_fp old\_data\_fp inter
 
 -   python -u 1\_pre\_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv 253 /data/NDVI/columns/landuse.npy \> 1\_processS.log &
     -   python -u 1\_pre\_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv 253 /data/emily/SJ/SJlanduse.npy \> 1\_processSCA.log &
--   python -u 1\_pre\_processS.py /data/emily/BL/spectral/ /data/john/BL/data1S.csv None 230 /data/emily/SJ/SJlanduse.npy \> 1\_processSBL.log &
+-   python -u 1\_pre\_processS.py /data/emily/BL/spectral/ /data/john/BL/data1S.csv None 230 \> 1\_processSBL.log &
 
 For h2o:
 --------

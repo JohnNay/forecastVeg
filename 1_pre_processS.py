@@ -18,6 +18,7 @@ dat = np.load(load_data_fp + 'finalMatrix.npy')
 print "Column names:"
 coln = open(load_data_fp + "columnNames.txt").read()
 coln = coln.replace('Pixel Reliability', 'PixelReliability')
+coln = coln.replace('LULC', 'landuse')
 coln = coln.split()
 # Variables to + '_lag'
 lags = ["GWP","B1","B2","B3","B4","B5","B6","B7", "nino34"]
