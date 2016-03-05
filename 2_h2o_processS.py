@@ -27,7 +27,7 @@ print "Making 'time_period' and 'landuse' a factor..."
 data['time_period'] = data['time_period'].asfactor()
 data['time_period'].isfactor()
 data['landuse'] = data['landuse'].asfactor()
-print data.levels(col='landuse')
+print data['landuse'].unique()
 
 #######################################################################
 print "Dropping all time period 1 because they have no lagged predictors..."

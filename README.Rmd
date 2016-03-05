@@ -95,13 +95,17 @@ python -u 2_h2o_processS.py *load_data_fp save_data_fp* > 2a_h2oS.log &
 
   * python -u 2_h2o_processS.py /data/john/srilanka/data1S.csv /data/john/srilanka/h2o_data_withMissingS > 2a_h2oS.log &
   * python -u 2_h2o_processS.py /data/john/CA/data1S.csv /data/john/CA/h2o_data_withMissingS > 2a_h2oSCA.log &
+  
+  * python -u 2_h2o_processS.py /data/john/BL/data1S.csv /data/john/BL/h2o_data_withMissingS > 2a_h2oSBL.log &
 
 python -u 2_h2o_process_2.py *load_data_fp save_training_data_fp save_holdout_data_fp* > 2b_h2oS.log &
 
   * Starting here, all the scripts are the same for spectral and non spectral. You just pass them different arguments.
-  * If you run non-spectral first, you can not specify the *save_training_ind_fp* with 2_h2o_process_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.
+  * If you run non-spectral first, you can optionally not specify the *save_training_ind_fp* with 2_h2o_process_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.
   * python -u 2_h2o_process_2.py /data/john/srilanka/h2o_data_withMissingS /data/john/srilanka/h2o_data_trainingS /data/john/srilanka/h2o_data_holdoutS > 2b_h2oS.log &
   * python -u 2_h2o_process_2.py /data/john/CA/h2o_data_withMissingS /data/john/CA/h2o_data_trainingS /data/john/CA/h2o_data_holdoutS > 2b_h2oSCA.log &
+  
+    * python -u 2_h2o_process_2.py /data/john/BL/h2o_data_withMissingS /data/john/BL/h2o_data_trainingS /data/john/BL/h2o_data_holdoutS /data/john/BL/random_split_for_training.csv > 2b_h2oSBL.log &
 
 ## For baseline:
 
