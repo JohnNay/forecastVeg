@@ -49,14 +49,13 @@ landuse = data['landuse']
 landuse[landuse==-9999] = None
 landuse[landuse==9999] = None
 data['landuse'] = landuse
-print data.levels(col='landuse')
 
 #######################################################################
 print "Making 'time_period' 'landuse' a factor..."
 data['time_period'] = data['time_period'].asfactor()
-print data.levels(col='time_period')
+print data['time_period'].unique()
 data['landuse'] = data['landuse'].asfactor()
-print data.levels(col='landuse')
+print data['landuse'].unique()
 data.describe()
 
 print "Dropping rows where the outcome, EVI, is NA..."
@@ -157,4 +156,3 @@ if(email):
                          "content-type: text/html"])
   content = headers + "\r\n\r\n" + "Done running the script.\n Sent from my Python code."
   session.sendmail(GMAIL_USERNAME, RECIP, content)
-
