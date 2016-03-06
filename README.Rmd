@@ -135,6 +135,8 @@ python -u 3_h2o_gbm.py *load_data_fp* *load_train_ind_fp* *saving_fp* B1_lag B2_
 
   * python -u 3_h2o_gbm.py /data/john/srilanka/h2o_data_trainingS /data/john/srilanka/random_split_for_training.csv output/gbmresS.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 3_gbm.log &
   * python -u 3_h2o_gbm.py /data/john/CA/h2o_data_trainingS /data/john/CA/random_split_for_training.csv output/gbmresSCA.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 3_gbmCA.log &
+  
+  * python -u 3_h2o_gbm.py /data/john/BL/h2o_data_trainingS /data/john/BL/random_split_for_training.csv gbmresSBL.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 3_gbmBL.log &
 
 
 # Modeling in h2o with deep learning (both model-imputed and mean-imputed):

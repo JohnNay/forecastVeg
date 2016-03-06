@@ -32,14 +32,13 @@ PixelReliability[PixelReliability==2] = 9999 # this is snow, so set it to NA
 PixelReliability[PixelReliability==0] = 2 # this is good, so give it high value: 2
 PixelReliability[PixelReliability==3] = 1 # this is medium quality, so give it lower value: 1
 data['PixelReliability'] = PixelReliability
-print "Unique values of the PixelReliability column:", PixelReliability.unique().show()
+print "Unique values of the PixelReliability column:", data['PixelReliability'].unique()
 
 data.describe()
 
 print "Dropping rows where the PixelReliability is NA..."
 ind = data['PixelReliability'] == 9999
 ind = ind!=1.0
-ind.show()
 print data.dim
 data = data[ind] 
 print data.dim
@@ -61,7 +60,6 @@ data.describe()
 print "Dropping rows where the outcome, EVI, is NA..."
 ind = data['EVI'].isna()
 ind = ind!=1.0
-ind.show()
 print data.dim 
 data = data[ind] 
 print data.dim
@@ -72,7 +70,7 @@ train_index = data['training']
 d = data[train_index]
 print d.dim
 print "Proportion of data in training data", d.dim[0]/data.dim[0]
-assert round(d.dim[0]/data.dim[0], 2) == prop_train or round(d.dim[0]/data.dim[0], 2) == prop_train + .01 or round(d.dim[0]/data.dim[0], 2) == prop_train - .01
+# assert round(d.dim[0]/data.dim[0], 2) == prop_train or round(d.dim[0]/data.dim[0], 2) == prop_train + .01 or round(d.dim[0]/data.dim[0], 2) == prop_train - .01
 hold_index = train_index != 'True'
 holdout = data[hold_index]
 assert holdout.dim[0] + d.dim[0] == data.dim[0]
@@ -85,9 +83,9 @@ del data, hold_index, train_index
 if (len(my_args)>3):
   prop_train = 0.80
   autocor = d['autocorrelationGrid']
-  print "autocor", autocor.show()
+  print "autocor", autocor
   grid_options = autocor.unique()
-  print "Grid options", grid_options.show()
+  print "Grid options", grid_options
   grid_options_l = h2o.as_list(grid_options, use_pandas=False)
   grid_options = np.squeeze(grid_options_l)
   # drop col name:

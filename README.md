@@ -94,12 +94,16 @@ python -u 2\_h2o\_processS.py *load\_data\_fp save\_data\_fp* \> 2a\_h2oS.log &
 -   python -u 2\_h2o\_processS.py /data/john/srilanka/data1S.csv /data/john/srilanka/h2o\_data\_withMissingS \> 2a\_h2oS.log &
 -   python -u 2\_h2o\_processS.py /data/john/CA/data1S.csv /data/john/CA/h2o\_data\_withMissingS \> 2a\_h2oSCA.log &
 
+-   python -u 2\_h2o\_processS.py /data/john/BL/data1S.csv /data/john/BL/h2o\_data\_withMissingS \> 2a\_h2oSBL.log &
+
 python -u 2\_h2o\_process\_2.py *load\_data\_fp save\_training\_data\_fp save\_holdout\_data\_fp* \> 2b\_h2oS.log &
 
 -   Starting here, all the scripts are the same for spectral and non spectral. You just pass them different arguments.
--   If you run non-spectral first, you can not specify the *save\_training\_ind\_fp* with 2\_h2o\_process\_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.
+-   If you run non-spectral first, you can optionally not specify the *save\_training\_ind\_fp* with 2\_h2o\_process\_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.
 -   python -u 2\_h2o\_process\_2.py /data/john/srilanka/h2o\_data\_withMissingS /data/john/srilanka/h2o\_data\_trainingS /data/john/srilanka/h2o\_data\_holdoutS \> 2b\_h2oS.log &
 -   python -u 2\_h2o\_process\_2.py /data/john/CA/h2o\_data\_withMissingS /data/john/CA/h2o\_data\_trainingS /data/john/CA/h2o\_data\_holdoutS \> 2b\_h2oSCA.log &
+
+    -   python -u 2\_h2o\_process\_2.py /data/john/BL/h2o\_data\_withMissingS /data/john/BL/h2o\_data\_trainingS /data/john/BL/h2o\_data\_holdoutS /data/john/BL/random\_split\_for\_training.csv \> 2b\_h2oSBL.log &
 
 For baseline:
 -------------
@@ -134,6 +138,8 @@ python -u 3\_h2o\_gbm.py *load\_data\_fp* *load\_train\_ind\_fp* *saving\_fp* B1
 
 -   python -u 3\_h2o\_gbm.py /data/john/srilanka/h2o\_data\_trainingS /data/john/srilanka/random\_split\_for\_training.csv output/gbmresS.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 3\_gbm.log &
 -   python -u 3\_h2o\_gbm.py /data/john/CA/h2o\_data\_trainingS /data/john/CA/random\_split\_for\_training.csv output/gbmresSCA.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 3\_gbmCA.log &
+
+-   python -u 3\_h2o\_gbm.py /data/john/BL/h2o\_data\_trainingS /data/john/BL/random\_split\_for\_training.csv gbmresSBL.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 3\_gbmBL.log &
 
 Modeling in h2o with deep learning (both model-imputed and mean-imputed):
 =========================================================================

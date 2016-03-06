@@ -32,26 +32,26 @@ d.head()
 print "Making 'time_period' and 'landuse' a factor..."
 d['time_period'] = d['time_period'].asfactor()
 assert d['time_period'].isfactor()
-print d.levels(col='time_period')
+print d['time_period'].unique()
 d['landuse'] = d['landuse'].asfactor()
 assert d['landuse'].isfactor()
-print d.levels(col='landuse')
+print d['landuse'].unique()
 d.describe()
 
 #######################################################################
 d['train_index'] = train_index
 train = d[d['train_index']]
 
-test_index = d['train_index'] != 1
+test_index = d['train_index'] != 'True'
 test = d[test_index]
 
-print "Training data has",train.ncol(),"columns and",train.nrow(),"rows, test has",test.nrow(),"rows."
+print "Training data has",train.dim[1], "columns and",train.dim[0],"rows, test has",test.dim[0],"rows."
 assert test.dim[0] + train.dim[0] == d.dim[0]
 
 print "Making data 25% smaller so this doesnt take as long by randomly keeping 75% of the rows."
 r = train[0].runif() # Random UNIform numbers (0,1), one per row
 train = train[ r < 0.75 ]
-print "Training data now has",train.nrow(),"rows."
+print "Training data now has", train.dim[0], "rows."
 
 h2o.remove([test_index, d])
 del test_index, d
@@ -153,4 +153,3 @@ if(email):
                          "content-type: text/html"])
   content = headers + "\r\n\r\n" + "Done running the script.\n Sent from my Python code."
   session.sendmail(GMAIL_USERNAME, RECIP, content)
-
