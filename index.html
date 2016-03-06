@@ -47,6 +47,19 @@
 
 <p>United States National Science Foundation grant EAR-1204685 funded this research.</p>
 
+<p><img src="https://raw.githubusercontent.com/JohnNay/forecastVeg/master/figures/WSC_poster2.png" alt="Poster"></p>
+
+<h1>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview:</h1>
+
+<p>The figure below illustrates our process. We downloaded and processed eleven years of remotely sensed imagery. We combined this data with ancillary datasets and reshaped it into a single matrix where each row corresponds to a pixel at one time and each column is a measured variable. We divided the observations into Training Data 1 and Testing Data 1 by sampling from large spatial grid indices without replacement. We then divided Training Data 1 into Training Data 2 and Testing Data 2 with the same spatial sampling process, and trained multiple models on Training Data 2, varying the hyper-parameters for each model estimation. We used Testing Data 2 to assess the performance of each model’s predictions. We repeated this loop of learning on Training Data 2 and testing on Testing Data 2 for each of the four different data types, and chose the combination of data type and hyper-parameter setting that achieved the highest performance in predicting Testing Data 2. Finally, we validated the best-performing model from the previous step by testing its performance on the held-out data in Testing Data 1. We repeated this entire process separately for Sri Lanka and California.</p>
+
+<p><img src="https://raw.githubusercontent.com/JohnNay/forecastVeg/master/figures/methods_diagram.jpg" alt="Methods Diagram"></p>
+
+<p>The next figure displays predictions of agricultural land in Testing Data 1, the hold-out data, in California.</p>
+
+<p><img src="https://raw.githubusercontent.com/JohnNay/forecastVeg/master/figures/scatter_ca.jpg" alt="Methods Diagram"></p>
+
 <h1>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
 
@@ -70,17 +83,6 @@
 <p>The optional visualizations of validation performance requires R, and the R packages dplyr, ggplot2, and ggExtra.</p>
 
 <h1>
-<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview:</h1>
-
-<p>The figure below illustrates our process. We downloaded and processed eleven years of remotely sensed imagery. We combined this data with ancillary datasets and reshaped it into a single matrix where each row corresponds to a pixel at one time and each column is a measured variable. We divided the observations into Training Data 1 and Testing Data 1 by sampling from large spatial grid indices without replacement. We then divided Training Data 1 into Training Data 2 and Testing Data 2 with the same spatial sampling process, and trained multiple models on Training Data 2, varying the hyper-parameters for each model estimation. We used Testing Data 2 to assess the performance of each model’s predictions. We repeated this loop of learning on Training Data 2 and testing on Testing Data 2 for each of the four different data types, and chose the combination of data type and hyper-parameter setting that achieved the highest performance in predicting Testing Data 2. Finally, we validated the best-performing model from the previous step by testing its performance on the held-out data in Testing Data 1. We repeated this entire process separately for Sri Lanka and California.</p>
-
-<p><img src="https://raw.githubusercontent.com/JohnNay/forecastVeg/master/figures/methods_diagram.jpg" alt="Methods Diagram"></p>
-
-<p>The next figure displays predictions of agricultural land in Testing Data 1, the hold-out data, in California.</p>
-
-<p><img src="https://raw.githubusercontent.com/JohnNay/forecastVeg/master/figures/scatter_ca.jpg" alt="Methods Diagram"></p>
-
-<h1>
 <a id="data-construction" class="anchor" href="#data-construction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data construction:</h1>
 
 <p>python -u 0_matrix_construction.py spectral directory username password tiles today enddate referenceImage &gt; 0_construct.log &amp;</p>
@@ -95,26 +97,27 @@
 <h3>
 <a id="for-non-spectral" class="anchor" href="#for-non-spectral" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>For non-spectral:</h3>
 
-<p>python -u 1_pre_process.py <em>load_data_fp save_data_fp load_extra_file</em> &gt; 1_process.log &amp;</p>
+<p>python -u 1_pre_process.py <em>load_data_fp save_data_fp load_extra_file intervals</em> &gt; 1_process.log &amp;</p>
 
 <ul>
 <li>  load_extra_file is optional, its used when an analyst has ancillary data, e.g. land-use classifications</li>
-<li>  python -u 1_pre_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy &gt; 1_process.log &amp;</li>
-<li>  python -u 1_pre_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy &gt; 1_processCA.log &amp;</li>
+<li>  python -u 1_pre_process.py /data/emily/SL/ /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy 253 &gt; 1_process.log &amp;</li>
+<li>  python -u 1_pre_process.py /data/emily/CA/ /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy 253 &gt; 1_processCA.log &amp;</li>
 </ul>
 
 <h3>
 <a id="for-spectral" class="anchor" href="#for-spectral" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>For spectral:</h3>
 
-<p>python -u 1_pre_processS.py <em>load_data_fp save_data_fp old_data_fp load_extra_file</em> &gt; 1_processS.log &amp;</p>
+<p>python -u 1_pre_processS.py <em>load_data_fp save_data_fp old_data_fp intervals load_extra_file</em> &gt; 1_processS.log &amp;</p>
 
 <ul>
-<li>  python -u 1_pre_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv /data/NDVI/columns/landuse.npy &gt; 1_processS.log &amp;
+<li>  python -u 1_pre_processS.py /data/emily/SLs/ /data/john/srilanka/data1S.csv /data/john/srilanka/data1.csv 253 /data/NDVI/columns/landuse.npy &gt; 1_processS.log &amp;
 
 <ul>
-<li>  python -u 1_pre_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv /data/emily/SJ/SJlanduse.npy &gt; 1_processSCA.log &amp;</li>
+<li>  python -u 1_pre_processS.py /data/emily/CAs/ /data/john/CA/data1S.csv /data/john/CA/data1.csv 253 /data/emily/SJ/SJlanduse.npy &gt; 1_processSCA.log &amp;</li>
 </ul>
 </li>
+<li>  python -u 1_pre_processS.py /data/emily/BL/spectral/ /data/john/BL/data1S.csv None 230 &gt; 1_processSBL.log &amp;</li>
 </ul>
 
 <h2>
@@ -146,16 +149,23 @@
 
 <ul>
 <li>  python -u 2_h2o_processS.py /data/john/srilanka/data1S.csv /data/john/srilanka/h2o_data_withMissingS &gt; 2a_h2oS.log &amp;</li>
-<li>  python -u 2_h2o_processS.py /data/john/CA/data1S.csv /data/john/CA/h2o_data_withMissingS &gt; 2a_h2oSCA.log &amp;</li>
+<li><p>python -u 2_h2o_processS.py /data/john/CA/data1S.csv /data/john/CA/h2o_data_withMissingS &gt; 2a_h2oSCA.log &amp;</p></li>
+<li><p>python -u 2_h2o_processS.py /data/john/BL/data1S.csv /data/john/BL/h2o_data_withMissingS &gt; 2a_h2oSBL.log &amp;</p></li>
 </ul>
 
 <p>python -u 2_h2o_process_2.py <em>load_data_fp save_training_data_fp save_holdout_data_fp</em> &gt; 2b_h2oS.log &amp;</p>
 
 <ul>
 <li>  Starting here, all the scripts are the same for spectral and non spectral. You just pass them different arguments.</li>
-<li>  If you run non-spectral first, you can not specify the <em>save_training_ind_fp</em> with 2_h2o_process_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.</li>
+<li>  If you run non-spectral first, you can optionally not specify the <em>save_training_ind_fp</em> with 2_h2o_process_2.py and thus not over-wrtie the csv file with the vector of indices denoting a training and testing data split. This allows results to be comparable between spectral and non-spectral.</li>
 <li>  python -u 2_h2o_process_2.py /data/john/srilanka/h2o_data_withMissingS /data/john/srilanka/h2o_data_trainingS /data/john/srilanka/h2o_data_holdoutS &gt; 2b_h2oS.log &amp;</li>
-<li>  python -u 2_h2o_process_2.py /data/john/CA/h2o_data_withMissingS /data/john/CA/h2o_data_trainingS /data/john/CA/h2o_data_holdoutS &gt; 2b_h2oSCA.log &amp;</li>
+<li>
+<p>python -u 2_h2o_process_2.py /data/john/CA/h2o_data_withMissingS /data/john/CA/h2o_data_trainingS /data/john/CA/h2o_data_holdoutS &gt; 2b_h2oSCA.log &amp;</p>
+
+<ul>
+<li>  python -u 2_h2o_process_2.py /data/john/BL/h2o_data_withMissingS /data/john/BL/h2o_data_trainingS /data/john/BL/h2o_data_holdoutS /data/john/BL/random_split_for_training.csv &gt; 2b_h2oSBL.log &amp;</li>
+</ul>
+</li>
 </ul>
 
 <h2>
@@ -203,7 +213,8 @@
 
 <ul>
 <li>  python -u 3_h2o_gbm.py /data/john/srilanka/h2o_data_trainingS /data/john/srilanka/random_split_for_training.csv output/gbmresS.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse &gt; 3_gbm.log &amp;</li>
-<li>  python -u 3_h2o_gbm.py /data/john/CA/h2o_data_trainingS /data/john/CA/random_split_for_training.csv output/gbmresSCA.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse &gt; 3_gbmCA.log &amp;</li>
+<li><p>python -u 3_h2o_gbm.py /data/john/CA/h2o_data_trainingS /data/john/CA/random_split_for_training.csv output/gbmresSCA.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse &gt; 3_gbmCA.log &amp;</p></li>
+<li><p>python -u 3_h2o_gbm.py /data/john/BL/h2o_data_trainingS /data/john/BL/random_split_for_training.csv gbmresSBL.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse &gt; 3_gbmBL.log &amp;</p></li>
 </ul>
 
 <h1>
