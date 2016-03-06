@@ -16,6 +16,19 @@ The paper can be downloaded as a pdf here: [<http://arxiv.org/abs/1602.06335>](h
 
 United States National Science Foundation grant EAR-1204685 funded this research.
 
+![Poster](figures/WSC_poster2.png)
+
+Overview:
+=========
+
+The figure below illustrates our process. We downloaded and processed eleven years of remotely sensed imagery. We combined this data with ancillary datasets and reshaped it into a single matrix where each row corresponds to a pixel at one time and each column is a measured variable. We divided the observations into Training Data 1 and Testing Data 1 by sampling from large spatial grid indices without replacement. We then divided Training Data 1 into Training Data 2 and Testing Data 2 with the same spatial sampling process, and trained multiple models on Training Data 2, varying the hyper-parameters for each model estimation. We used Testing Data 2 to assess the performance of each model’s predictions. We repeated this loop of learning on Training Data 2 and testing on Testing Data 2 for each of the four different data types, and chose the combination of data type and hyper-parameter setting that achieved the highest performance in predicting Testing Data 2. Finally, we validated the best-performing model from the previous step by testing its performance on the held-out data in Testing Data 1. We repeated this entire process separately for Sri Lanka and California.
+
+![Methods Diagram](figures/methods_diagram.jpg)
+
+The next figure displays predictions of agricultural land in Testing Data 1, the hold-out data, in California.
+
+![Methods Diagram](figures/scatter_ca.jpg)
+
 Requirements
 ============
 
@@ -32,17 +45,6 @@ Requirements
     [sudo] pip install annoy # for baseline model
 
 The optional visualizations of validation performance requires R, and the R packages dplyr, ggplot2, and ggExtra.
-
-Overview:
-=========
-
-The figure below illustrates our process. We downloaded and processed eleven years of remotely sensed imagery. We combined this data with ancillary datasets and reshaped it into a single matrix where each row corresponds to a pixel at one time and each column is a measured variable. We divided the observations into Training Data 1 and Testing Data 1 by sampling from large spatial grid indices without replacement. We then divided Training Data 1 into Training Data 2 and Testing Data 2 with the same spatial sampling process, and trained multiple models on Training Data 2, varying the hyper-parameters for each model estimation. We used Testing Data 2 to assess the performance of each model’s predictions. We repeated this loop of learning on Training Data 2 and testing on Testing Data 2 for each of the four different data types, and chose the combination of data type and hyper-parameter setting that achieved the highest performance in predicting Testing Data 2. Finally, we validated the best-performing model from the previous step by testing its performance on the held-out data in Testing Data 1. We repeated this entire process separately for Sri Lanka and California.
-
-![Methods Diagram](figures/methods_diagram.jpg)
-
-The next figure displays predictions of agricultural land in Testing Data 1, the hold-out data, in California.
-
-![Methods Diagram](figures/scatter_ca.jpg)
 
 Data construction:
 ==================
