@@ -45,14 +45,12 @@ if spectral == '1':
     mod09 = ap.MOD09A1(directory = directory + '/spectral', username = username, password = password, dataset = 'MOD09A1.005', subset = '1 1 1 1 1 1 1 0 0 0 0 1 0',
     tiles = tiles, today = today, enddate = enddate, referenceImage = referenceImage)
     
-    mod09.download()
-    mod09.finalMatrix()
-    #mod09.prepare()
-    #if os.path.isfile(directory + '/MOD13Q1.005.npy'):
-        #subprocess.call(['cp', directory + 'MOD13Q1.npy', directory + 'MOD13Q1.txt', directory + '/spectral'])
-    #else:
-        #mod13 = ap.MOD13Q1(directory = directory + '/spectral', username = username, password = password, dataset = 'MOD13Q1.005', subset = '1 0 1 0 0 0 0 0 0 0 0 1',
-        #tiles = tiles, today = today, enddate = enddate, referenceImage = referenceImage)
-        #mod13.prepare()
+    mod09.prepare()
+    if os.path.isfile(directory + '/MOD13Q1.005.npy'):
+        subprocess.call(['cp', directory + 'MOD13Q1.npy', directory + 'MOD13Q1.txt', directory + '/spectral'])
+    else:
+        mod13 = ap.MOD13Q1(directory = directory + '/spectral', username = username, password = password, dataset = 'MOD13Q1.005', subset = '1 0 1 0 0 0 0 0 0 0 0 1',
+        tiles = tiles, today = today, enddate = enddate, referenceImage = referenceImage)
+        mod13.prepare()
     
-    #mod09.finalMatrix()
+    mod09.finalMatrix()
