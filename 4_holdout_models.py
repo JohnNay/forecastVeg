@@ -60,10 +60,10 @@ d = h2o.import_file(path = train_data_fp)
 print "Making 'time_period' and 'landuse' a factor..."
 d['time_period'] = d['time_period'].asfactor()
 assert d['time_period'].isfactor()
-print d.['time_period'].unique()
+print d['time_period'].unique()
 d['landuse'] = d['landuse'].asfactor()
 assert d['landuse'].isfactor()
-print d['landuse'.unique()
+print d['landuse'].unique()
 d.describe()
 
 def fit_predict_gbm(params, predictors, csvfile, saving_varimp_fp):

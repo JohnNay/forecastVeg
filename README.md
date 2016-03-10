@@ -114,6 +114,7 @@ python -u 2\_baseline\_process.py load\_data\_fp save\_data\_fp \> 2\_baseline.l
 
 -   python -u 2\_baseline\_process.py /data/john/srilanka/data1.csv /data/john/srilanka/baseline\_data.csv \> 2\_baseline.log &
 -   python -u 2\_baseline\_process.py /data/john/CA/data1.csv /data/john/CA/baseline\_data.csv \> 2\_baselineCA.log &
+-   python -u 2\_baseline\_process.py /data/john/BL/data1S.csv /data/john/BL/baseline\_data.csv \> 2\_baselineBL.log &
 
 Modeling (spectral and non-spectral use same scripts, just different arguments for predictor variables)
 =======================================================================================================
@@ -190,6 +191,7 @@ python -u 4\_baseline.py *load\_data\_fp saving\_model saving\_fp saving\_predic
 
 -   python -u 4\_baseline.py /data/john/srilanka/baseline\_data.csv /data/john/srilanka/baseline\_model.ann output/baseline\_holdout.csv /data/john/srilanka/baseline\_predicted\_holdout.csv 7 30 10 \> 4\_bline\_holdout.log &
 -   python -u 4\_baseline.py /data/john/CA/baseline\_data.csv /data/john/CA/baseline\_model.ann output/baseline\_holdout.csv /data/john/CA/baseline\_predicted\_holdout.csv 7 30 10 \> 4\_bline\_holdoutCA.log &
+-   python -u 4\_baseline.py /data/john/BL/baseline\_data.csv /data/john/BL/baseline\_model.ann output/baseline\_holdout.csv /data/john/BL/baseline\_predicted\_holdout.csv 7 30 10 \> 4\_bline\_holdoutBL.log &
 
 With Models:
 ------------
@@ -205,6 +207,7 @@ python -u 4\_holdout\_models.py *load\_data\_fp train\_data\_fp training\_res\_f
 
 -   python -u 4\_holdout\_models.py /data/john/srilanka/h2o\_data\_holdoutS /data/john/srilanka/h2o\_data\_trainingS output/gbmresS.csv output/gbm\_holdout\_finalS.csv /data/john/srilanka/gbm\_predicted\_holdoutS.csv output/gbm\_varimp.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 4\_model\_holdoutS.log &
     -   python -u 4\_holdout\_models.py /data/john/CA/h2o\_data\_holdoutS /data/john/CA/h2o\_data\_trainingS output/gbmresSCA.csv output/gbm\_holdout\_finalSCA.csv /data/john/CA/gbm\_predicted\_holdoutS.csv output/gbm\_varimpCA.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 4\_model\_holdoutSCA.log &
+    -   python -u 4\_holdout\_models.py /data/john/BL/h2o\_data\_holdoutS /data/john/BL/h2o\_data\_trainingS output/gbmresSBL.csv output/gbm\_holdout\_finalSBL.csv /data/john/BL/gbm\_predicted\_holdoutS.csv output/gbm\_varimpBL.csv B1\_lag B2\_lag B3\_lag B4\_lag B5\_lag B6\_lag B7\_lag GWP\_lag nino34\_lag time\_period EVI\_lag landuse \> 4\_model\_holdoutSBL.log &
 
 Create plots of validation performance:
 =======================================
