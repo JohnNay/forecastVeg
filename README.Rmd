@@ -201,7 +201,7 @@ python -u 4_holdout_models.py *load_data_fp train_data_fp training_res_fp saving
 
   * python -u 4_holdout_models.py /data/john/srilanka/h2o_data_holdoutS /data/john/srilanka/h2o_data_trainingS output/gbmresS.csv output/gbm_holdout_finalS.csv /data/john/srilanka/gbm_predicted_holdoutS.csv output/gbm_varimp.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 4_model_holdoutS.log &
     * python -u 4_holdout_models.py /data/john/CA/h2o_data_holdoutS /data/john/CA/h2o_data_trainingS output/gbmresSCA.csv output/gbm_holdout_finalSCA.csv /data/john/CA/gbm_predicted_holdoutS.csv output/gbm_varimpCA.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 4_model_holdoutSCA.log &
-    * python -u 4_holdout_models.py /data/john/BL/h2o_data_holdoutS /data/john/BL/h2o_data_trainingS gbmresSBL.csv output/gbm_holdout_finalSBL.csv /data/john/BL/gbm_predicted_holdoutS.csv gbm_varimpBL.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 4_model_holdoutSBL.log &
+    * python -u 4_holdout_models.py /data/john/BL/h2o_data_holdoutS /data/john/BL/h2o_data_trainingS gbmresSBL.csv gbm_holdout_finalSBL.csv /data/john/BL/gbm_predicted_holdoutS.csv gbm_varimpBL.csv B1_lag B2_lag B3_lag B4_lag B5_lag B6_lag B7_lag GWP_lag nino34_lag time_period EVI_lag landuse > 4_model_holdoutSBL.log &
 
 # Create plots of validation performance:
 
