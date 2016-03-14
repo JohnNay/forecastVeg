@@ -18,7 +18,7 @@ predictors = my_args[6:]
 # predictors = GWP_lag LST_lag NDVI_lag FPAR_lag LAI_lag GP_lag PSN_lag nino34_lag time_period EVI_lag
 
 print "Loading in data..."
-h2o.init(min_mem_size=200, max_mem_size = 210)
+h2o.init(min_mem_size=200, max_mem_size = 250)
 
 # holdout = h2o.import_file(path = "/data/john/srilanka/h2o_data_holdout")
 # di = h2o.import_file(path = "/data/john/srilanka/model_imputed_data")
@@ -147,7 +147,7 @@ def start_save(csvfile, initialize):
 def final_predict(best_params, predict_function,
                   csvfile, csvfile_vector, saving_varimp_fp,
                   predictors = predictors):
-  print "Training d has",d.ncol(),"columns and",d.nrow(),"rows, holdout has",holdout.nrow(),"rows."
+  print "Training d has",d.dim[1],"columns and",d.dim[0],"rows, holdout has",holdout.dim[0],"rows."
   start_save(csvfile = csvfile, initialize = ['timing', 'datetime'])
   start_save(csvfile = saving_varimp_fp, initialize = ['variable', 'relative_importance', 'scaled_importance', 'percentage'])
   out = predict_function(best_params, predictors, csvfile, saving_varimp_fp)

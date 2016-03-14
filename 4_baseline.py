@@ -113,7 +113,8 @@ def run_all_baseline(data, csvfile = saving_fp,
   print "Dividing into training and testing with 'autocorrelationGrid' column..."
   prop_train = 0.80 # This is from 1_pre_process.py
   d = data[data['training']]
-  assert round(d.shape[0]/data.shape[0], 2) == prop_train or round(d.shape[0]/data.shape[0], 2) == prop_train + .01 or round(d.shape[0]/data.shape[0], 2) == prop_train - .01
+  print round(d.shape[0]/data.shape[0], 2)
+  #assert round(d.shape[0]/data.shape[0], 2) == prop_train or round(d.shape[0]/data.shape[0], 2) == prop_train + .01 or round(d.shape[0]/data.shape[0], 2) == prop_train - .01
   hold_index = data['training'] != True
   holdout = data[hold_index]
   assert holdout.shape[0] + d.shape[0] == data.shape[0]
