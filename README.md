@@ -10,9 +10,7 @@ The data downloading and processing requires a computer with significant amounts
 
 If you use these scripts, cite this paper:
 
-Nay, John J., Burchfield, Emily, Gilligan, Jonathan. (2016) "Forecasting Vegetation Health at High Spatial Resolution." eprint arXiv:1602.06335
-
-The paper can be downloaded as a pdf here: [<http://arxiv.org/abs/1602.06335>](http://arxiv.org/abs/1602.06335).
+[Nay, John J., Burchfield, Emily, Gilligan, Jonathan. (2018) A machine-learning approach to forecasting remotely sensed vegetation health. International journal of remote sensing. Volume 39, Issu 6, Pages 1800-1816](https://www.tandfonline.com/doi/full/10.1080/01431161.2017.1410296)
 
 United States National Science Foundation grant EAR-1204685 funded this research.
 
